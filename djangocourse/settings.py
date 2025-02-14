@@ -50,6 +50,26 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+if DEBUG:
+    INSTALLED_APPS +=[
+        "debug_toolbar"
+    ]
+
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware"
+    ]
+    import socket 
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    docker_ips = [ip[:-1] + "1" for ip in ips]
+
+    INTERNAL_IPS = docker_ips + ["127.0.0.1"]
+    INTERNAL_IPS += ["172.17.0.1"]
+
+    # DEBUG_TOOLBAR_CONFIG = {
+    #     "SHOW_TOOLBAR_CALLBACK": lambda request: print(request.META),
+    # }
+
 ROOT_URLCONF = 'djangocourse.urls'
 
 TEMPLATES = [
@@ -102,6 +122,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+LOGIN_REDIRECT_URL= "home"
+LOGOUT_REDIRECT_URL = "login"
 
 
 # Internationalization

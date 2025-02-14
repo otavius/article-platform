@@ -5,3 +5,7 @@ docker exec djangocourse poetry run python manage.py migrate
 (volume - linux) docker run -dp 8000:8000 --name djangocourse -v "$(pwd):/code" djangocourse
 
 docker rm djangocourse
+
+## Poetry 
+-- poetry instal --no-root 
+-- poetry env activate (if poetry shell doesn't work)
